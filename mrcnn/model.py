@@ -181,7 +181,7 @@ def resnet_graph(input_image, architecture, stage5=False, train_bn=True):
     x = BatchNorm(name='bn_conv1')(x, training=train_bn)
     x = KL.Activation('relu')(x)
     C1 = x = KL.MaxPooling2D((3, 3), strides=(2, 2), padding="same")(x)
-    # Stage 2
+    # Stage 2 inout:/4
     x = conv_block(x, 3, [64, 64, 256], stage=2, block='a', strides=(1, 1), train_bn=train_bn)
     x = identity_block(x, 3, [64, 64, 256], stage=2, block='b', train_bn=train_bn)
     C2 = x = identity_block(x, 3, [64, 64, 256], stage=2, block='c', train_bn=train_bn)
@@ -203,11 +203,11 @@ def resnet_graph(input_image, architecture, stage5=False, train_bn=True):
         C5 = x = identity_block(x, 3, [512, 512, 2048], stage=5, block='c', train_bn=train_bn)
     else:
         C5 = None
-    return [C1, C2, C3, C4, C5]
+    return [C1, C2, C3, C4, C5]# Use every stage
 
 
 ############################################################
-#  Proposal Layer
+#  Proposal Layer [link to the paper to understand]
 ############################################################
 
 def apply_box_deltas_graph(boxes, deltas):
