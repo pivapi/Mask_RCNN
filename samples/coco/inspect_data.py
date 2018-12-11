@@ -125,7 +125,7 @@ for level in range(levels):
 
 ########################################################
 # Create data generator
-random_rois = 2000
+random_rois = 20
 g = modellib.data_generator(
     dataset, config, shuffle=True, random_rois=random_rois,
     batch_size=4,
@@ -155,3 +155,33 @@ print("image_id: ", image_id, dataset.image_reference(image_id))
 # Remove the last dim in mrcnn_class_ids. It's only added
 # to satisfy Keras restriction on target shape.
 mrcnn_class_ids = mrcnn_class_ids[:, :, 0]
+
+
+########################################################
+b = 0
+
+# Restore original image (reverse normalization)
+sample_image = modellib.unmold_image(normalized_images[b], config)
+
+# Compute anchor shifts.
+indices = np.where(rpn_match[b] == 1)[0]
+refined_anchors = utils.apply_box_deltas(anchors[indices], rpn_bbox[b, :len(indices)] * config.RPN_BBOX_STD_DEV)
+log("anchors", anchors)
+log("refined_anchors", refined_anchors)
+
+# Get list of positive anchors
+positive_anchor_ids = np.where(rpn_match[b] == 1)[0]
+print("Positive anchors: {}".format(len(positive_anchor_ids)))
+negative_anchor_ids = np.where(rpn_match[b] == -1)[0]
+print("Negative anchors: {}".format(len(negative_anchor_ids)))
+neutral_anchor_ids = np.where(rpn_match[b] == 0)[0]
+print("Neutral anchors: {}".format(len(neutral_anchor_ids)))
+
+# ROI breakdown by class
+for c, n in zip(dataset.class_names, np.bincount(mrcnn_class_ids[b].flatten())):
+    if n:
+        print("{:23}: {}".format(c[:20], n))
+
+# Show positive anchors
+visualize.draw_boxes(sample_image, boxes=anchors[positive_anchor_ids],
+                     refined_boxes=refined_anchors)
