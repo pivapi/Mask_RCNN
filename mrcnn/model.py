@@ -1464,6 +1464,7 @@ def build_rpn_targets(image_shape, anchors, gt_class_ids, gt_boxes, config):
     # Handle COCO crowds
     # A crowd box in COCO is a bounding box around several instances. Exclude
     # them from training. A crowd box is given a negative class ID.
+    # 一个框里面有很多目标，通过将其gt_class_ids赋负数来标记
     crowd_ix = np.where(gt_class_ids < 0)[0]
     if crowd_ix.shape[0] > 0:
         # Filter out crowds from ground truth class IDs and boxes
