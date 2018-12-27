@@ -107,6 +107,7 @@ The training schedule, learning rate, and other parameters should be set in `sam
 
 
 # Training on Your Own Dataset
+**这个成功在2070上训练，虚拟环境是MRCNN，采用了迁移学习，就是利用COCO训练好的模型来训练自己的数据集，这样比较小的数据集也会得到比较好的训练效果**
 
 Start by reading this [blog post about the balloon color splash sample](https://engineering.matterport.com/splash-of-color-instance-segmentation-with-mask-r-cnn-and-tensorflow-7c761e238b46). It covers the process starting from annotating images to training to using the results in a sample application.
 
@@ -208,7 +209,10 @@ If you extend this model to other datasets or build projects that use it, we'd l
 ### [Splash of Color](https://engineering.matterport.com/splash-of-color-instance-segmentation-with-mask-r-cnn-and-tensorflow-7c761e238b46). A blog post explaining how to train this model from scratch and use it to implement a color splash effect.
 ![Balloon Color Splash](assets/balloon_color_splash.gif)
 
-
+---
+**训练了一下，平台：2070，虚拟环境：MRCNN**
+同样利用COCO训练好的模型进行迁移学习，训练了40epochs，但是这个工程最大的缺点就是没有给出validation数据
+---
 ### [Segmenting Nuclei in Microscopy Images](samples/nucleus). Built for the [2018 Data Science Bowl](https://www.kaggle.com/c/data-science-bowl-2018)
 Code is in the `samples/nucleus` directory.
 
@@ -239,3 +243,7 @@ A computer vision class project by HU Shiyu to apply the color pop effect on peo
 
 ### [GRASS GIS Addon](https://github.com/ctu-geoforall-lab/i.ann.maskrcnn) to generate vector masks from geospatial imagery. Based on a [Master's thesis](https://github.com/ctu-geoforall-lab-projects/dp-pesek-2018) by Ondřej Pešek.
 ![GRASS GIS Image](assets/project_grass_gis.png)
+
+## 自己实验记录
+1. 在COCO数据集上训练正常，虚拟环境是MRCNN，平台是2070，但是并没有完整的训练结果--[待定任务]
+2. 在Splash of Color训练完成，平台：2070，虚拟环境：MRCNN

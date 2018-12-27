@@ -17,6 +17,7 @@ Usage: import the module (see Jupyter notebooks for examples), or run from
 
     # Train a new model starting from specific weights file
     python3 nucleus.py train --dataset=/path/to/dataset --subset=train --weights=/path/to/weights.h5
+    train --dataset=/home/piva/Object-Detection/Mask_RCNN/datasets/Nuclei --subset=stage1_train --weights=coco
 
     # Resume training a model that you had trained earlier
     python3 nucleus.py train --dataset=/path/to/dataset --subset=train --weights=last
@@ -105,7 +106,7 @@ class NucleusConfig(Config):
     NAME = "nucleus"
 
     # Adjust depending on your GPU memory
-    IMAGES_PER_GPU = 6
+    IMAGES_PER_GPU = 4
 
     # Number of classes (including background)
     NUM_CLASSES = 1 + 1  # Background + nucleus
@@ -358,7 +359,6 @@ def mask_to_rle(image_id, mask, scores):
 ############################################################
 #  Detection
 ############################################################
-
 def detect(model, dataset_dir, subset):
     """Run detection on images in the given directory."""
     print("Running on {}".format(dataset_dir))

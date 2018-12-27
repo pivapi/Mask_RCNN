@@ -13,6 +13,7 @@ Usage: import the module (see Jupyter notebooks for examples), or run from
 
     # Train a new model starting from pre-trained COCO weights
     python3 balloon.py train --dataset=/path/to/balloon/dataset --weights=coco
+    train --dataset=/home/piva/Object-Detection/Mask_RCNN/datasets/balloon --weights=coco
 
     # Resume training a model that you had trained earlier
     python3 balloon.py train --dataset=/path/to/balloon/dataset --weights=last
